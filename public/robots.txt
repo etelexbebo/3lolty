@@ -1,0 +1,2 @@
+لاUser-agent: *
+Allow: /
