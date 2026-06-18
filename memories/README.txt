@@ -1,0 +1,3 @@
+# ضع صورك هنا
+# مثال: memory1.jpg, memory2.jpg ...
+# ثم في constants.ts اكتب: photo: '/memories/memory1.jpg'
