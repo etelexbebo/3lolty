@@ -14,7 +14,8 @@ export const CameraController = () => {
   const star = useRef(new THREE.Vector3());
   const desiredPos = useRef(new THREE.Vector3());
   const desiredLook = useRef(new THREE.Vector3());
-  const orienter = useRef(new THREE.Object3D());
+  const lookMatrix = useRef(new THREE.Matrix4());
+  const desiredQuat = useRef(new THREE.Quaternion());
 
   useFrame((state, delta) => {
     const roomZ = currentRoom * ROOM_Z_SPACING;
@@ -39,9 +40,14 @@ export const CameraController = () => {
 
     state.camera.position.lerp(desiredPos.current, t);
 
-    orienter.current.position.copy(state.camera.position);
-    orienter.current.lookAt(desiredLook.current);
-    state.camera.quaternion.slerp(orienter.current.quaternion, t);
+    // Matrix4.lookAt uses the camera convention (-Z towards the target)
+    lookMatrix.current.lookAt(
+      state.camera.position,
+      desiredLook.current,
+      state.camera.up
+    );
+    desiredQuat.current.setFromRotationMatrix(lookMatrix.current);
+    state.camera.quaternion.slerp(desiredQuat.current, t);
   });
 
   return null;
