@@ -13,11 +13,20 @@ const Experience = React.lazy(() => import("@/components/Experience"));
 
 const queryClient = new QueryClient();
 
+/** `?view=2d` / `?view=3d` overrides the automatic WebGL detection. */
+function viewOverride(): boolean | null {
+  if (typeof window === "undefined") return null;
+  const view = new URLSearchParams(window.location.search).get("view");
+  if (view === "2d") return false;
+  if (view === "3d") return true;
+  return null;
+}
+
 function Home() {
   const [webglOk, setWebglOk] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setWebglOk(checkWebGLSupport());
+    setWebglOk(viewOverride() ?? checkWebGLSupport());
   }, []);
 
   if (webglOk === null) {

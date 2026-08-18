@@ -19,6 +19,7 @@ const ClickableStar = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   const meshRef = useRef<any>(null);
+  const hitRef = useRef<any>(null);
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
@@ -27,20 +28,28 @@ const ClickableStar = ({
     meshRef.current.scale.setScalar(1 + pulse + (hovered || selected ? 0.55 : 0));
   });
 
+  const activate = (e: any) => {
+    e.stopPropagation();
+    // stars overlap on screen: only the frontmost one reacts
+    if (e.intersections?.[0]?.object !== hitRef.current) return;
+    if (selected) onBack();
+    else onSelect();
+  };
+
   return (
     <group position={position}>
+      {/* generous invisible hit area so stars are tappable on phones */}
       <mesh
-        ref={meshRef}
+        ref={hitRef}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
-        onClick={(e: any) => {
-          e.stopPropagation();
-          // stars overlap on screen: only the frontmost one reacts
-          if (e.intersections?.[0]?.object !== meshRef.current) return;
-          if (selected) onBack();
-          else onSelect();
-        }}
+        onClick={activate}
       >
+        <sphereGeometry args={[0.6, 8, 8]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+
+      <mesh ref={meshRef} raycast={() => null}>
         <sphereGeometry args={[hovered || selected ? 0.24 : 0.13, 16, 16]} />
         <meshBasicMaterial color={hovered || selected ? '#ffffff' : '#FFB6C1'} />
       </mesh>
