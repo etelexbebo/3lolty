@@ -558,7 +558,8 @@ function CounterCard({ value, label, testId, delay }:
         border: "1px solid rgba(255,182,193,0.28)",
         boxShadow: "0 0 22px rgba(255,182,193,0.15), inset 0 0 18px rgba(255,182,193,0.05)",
       }}>
-      <span style={{ display: "block", overflow: "hidden", height: "1.15em" }}>
+      <span style={{ display: "block", overflow: "hidden",
+        fontSize: "clamp(1.9rem, 7.5vw, 3.1rem)", height: "1.15em" }}>
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span key={value}
             data-testid={testId}
@@ -566,7 +567,7 @@ function CounterCard({ value, label, testId, delay }:
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: "-55%", opacity: 0, scale: 0.85 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            style={{ ...EN, display: "block", fontSize: "clamp(1.9rem, 7.5vw, 3.1rem)",
+            style={{ ...EN, display: "block", fontSize: "1em",
               color: PINK, fontWeight: 300, lineHeight: 1.15,
               fontVariantNumeric: "tabular-nums" as any,
               textShadow: "0 0 22px rgba(255,182,193,0.65)" }}>

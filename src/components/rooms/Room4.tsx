@@ -33,7 +33,7 @@ const CounterBox = ({ value, label, delay }: { value: number; label: string; del
     }}
     className="flex min-w-[70px] flex-1 flex-col items-center justify-center rounded-xl border border-primary/25 bg-[#10040c]/80 px-2 py-3 shadow-[0_0_20px_rgba(255,182,193,0.16)] backdrop-blur-md sm:min-w-[84px]"
   >
-    <span className="block h-[1.15em] overflow-hidden">
+    <span className="block h-[1.15em] overflow-hidden text-2xl sm:text-[1.9rem]">
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={value}
@@ -41,7 +41,7 @@ const CounterBox = ({ value, label, delay }: { value: number; label: string; del
           animate={{ y: 0, opacity: 1, scale: 1 }}
           exit={{ y: '-55%', opacity: 0, scale: 0.85 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="block font-mono text-2xl leading-[1.15] text-primary tabular-nums drop-shadow-[0_0_12px_rgba(255,182,193,0.6)] sm:text-[1.9rem]"
+          className="block font-mono leading-[1.15] text-primary tabular-nums drop-shadow-[0_0_12px_rgba(255,182,193,0.6)]"
         >
           {String(value).padStart(2, '0')}
         </motion.span>
@@ -82,10 +82,10 @@ export const Room4 = ({ position }: { position: [number, number, number] }) => {
         </Torus>
       </Float>
 
-      <Html center transform zIndexRange={[100, 0]} distanceFactor={11}>
+      <Html center zIndexRange={[100, 0]}>
         <div
           dir="rtl"
-          className="flex w-[88vw] max-w-[480px] flex-col items-center justify-center rounded-2xl border border-primary/25 bg-[#090005]/88 p-4 text-center font-serif shadow-[0_0_28px_rgba(255,182,193,0.18)] backdrop-blur-xl"
+          className="flex max-h-[74vh] w-[88vw] max-w-[440px] flex-col items-center justify-center overflow-y-auto rounded-2xl border border-primary/25 bg-[#090005]/88 p-4 text-center font-serif shadow-[0_0_28px_rgba(255,182,193,0.18)] backdrop-blur-xl"
         >
           <h2 className="text-xl text-primary drop-shadow-[0_0_10px_rgba(255,182,193,0.55)] sm:text-2xl">
             عداد الحب
