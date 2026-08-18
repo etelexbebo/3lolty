@@ -4,9 +4,23 @@ import { Html, Float } from '@react-three/drei';
 import { useMuseum } from '@/context/MuseumContext';
 import { LOVE_REASONS } from '@/lib/constants';
 
-const ClickableStar = ({ position, reason, index }: { position: [number, number, number]; reason: string; index: number }) => {
+const ClickableStar = ({
+  position,
+  reason,
+  index,
+  selected,
+  onSelect,
+  onBack,
+}: {
+  position: [number, number, number];
+  reason: string;
+  index: number;
+  selected: boolean;
+  onSelect: () => void;
+  onBack: () => void;
+}) => {
   const [hovered, setHovered] = useState(false);
-  const [clicked, setClicked] = useState(false);
+  const clicked = selected;
   const meshRef = useRef<any>(null);
 
   useFrame(({ clock }) => {
@@ -24,7 +38,8 @@ const ClickableStar = ({ position, reason, index }: { position: [number, number,
         onPointerOut={() => setHovered(false)}
         onClick={(e: any) => {
           e.stopPropagation();
-          setClicked(!clicked);
+          if (clicked) onBack();
+          else onSelect();
         }}
       >
         <sphereGeometry args={[hovered || clicked ? 0.24 : 0.13, 16, 16]} />
@@ -35,7 +50,7 @@ const ClickableStar = ({ position, reason, index }: { position: [number, number,
         <Html center zIndexRange={[100, 0]} distanceFactor={18}>
           <div
             dir="rtl"
-            className="pointer-events-none mt-7 w-52 rounded-lg border border-primary/40 bg-black/82 p-3 text-center font-serif shadow-[0_0_18px_rgba(255,182,193,0.24)] backdrop-blur-md animate-in zoom-in fade-in duration-300"
+            className="mt-7 w-52 rounded-lg border border-primary/40 bg-black/82 p-3 text-center font-serif shadow-[0_0_18px_rgba(255,182,193,0.24)] backdrop-blur-md animate-in zoom-in fade-in duration-300"
           >
             <div className="mb-1 text-[10px] text-primary/45">
               نجمة {index + 1}
@@ -43,6 +58,12 @@ const ClickableStar = ({ position, reason, index }: { position: [number, number,
             <p className="text-xs leading-relaxed text-primary">
               {reason}
             </p>
+            <button
+              onClick={onBack}
+              className="mt-3 rounded-full border border-primary/45 bg-primary/10 px-3 py-1.5 text-[10px] text-primary transition-colors hover:bg-primary/20"
+            >
+              ↶ ارجع واختار نجمة تانية
+            </button>
           </div>
         </Html>
       )}
@@ -53,6 +74,7 @@ const ClickableStar = ({ position, reason, index }: { position: [number, number,
 export const Room5 = ({ position }: { position: [number, number, number] }) => {
   const { currentRoom } = useMuseum();
   const isActive = currentRoom === 5;
+  const [selected, setSelected] = useState<number | null>(null);
 
   const starPositions = useMemo(() => {
     return LOVE_REASONS.map((_, i) => {
@@ -71,7 +93,15 @@ export const Room5 = ({ position }: { position: [number, number, number] }) => {
   return (
     <group position={position}>
       {LOVE_REASONS.map((reason, i) => (
-        <ClickableStar key={reason} position={starPositions[i]} reason={reason} index={i} />
+        <ClickableStar
+          key={reason}
+          position={starPositions[i]}
+          reason={reason}
+          index={i}
+          selected={selected === i}
+          onSelect={() => setSelected(i)}
+          onBack={() => setSelected(null)}
+        />
       ))}
 
       <Float speed={1} floatIntensity={0.2}>
@@ -84,7 +114,9 @@ export const Room5 = ({ position }: { position: [number, number, number] }) => {
               النجوم
             </h2>
             <p className="mt-2 border-t border-primary/15 px-4 pt-2 text-xs leading-relaxed text-primary/50">
-              كل نجمة عليها سبب من أسباب حبي ليكي
+              {selected === null
+                ? 'كل نجمة عليها سبب من أسباب حبي ليكي'
+                : 'اضغط على زر الرجوع أو على النجمة تاني عشان تختار نجمة تانية'}
             </p>
           </div>
         </Html>

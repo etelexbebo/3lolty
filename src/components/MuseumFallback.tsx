@@ -713,10 +713,12 @@ function Room5() {
                 {LOVE_REASONS[selected]}
               </p>
               <button onClick={() => setSelected(null)}
-                style={{ marginTop: 22, ...AR, background: "none", border: "none",
-                  color: "rgba(255,182,193,0.4)", fontSize: "0.9rem", cursor: "pointer",
-                  minHeight: 44, padding: "0 16px" }}>
-                أغلق
+                data-testid="button-back-to-stars"
+                style={{ marginTop: 22, ...AR, background: "rgba(255,182,193,0.12)",
+                  border: "1px solid rgba(255,182,193,0.45)", borderRadius: 999,
+                  color: PINK, fontSize: "0.95rem", cursor: "pointer",
+                  minHeight: 46, padding: "0 20px" }}>
+                ↶ ارجع واختار نجمة تانية
               </button>
             </motion.div>
           </motion.div>

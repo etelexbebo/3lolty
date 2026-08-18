@@ -503,17 +503,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:va
   </div>
 
   <!-- ════ Star modal ════ -->
-  <div id="star-modal" class="modal-overlay" onclick="closeModal('star-modal')">
+  <div id="star-modal" class="modal-overlay" onclick="backToStars()">
     <div class="modal-sheet" onclick="event.stopPropagation()">
       <div style="font-size:2.5rem;margin-bottom:16px;color:var(--pink);
                   animation:text-glow 3s ease-in-out infinite">✦</div>
       <p id="star-reason"
         style="font-family:var(--font-ar);font-size:clamp(1.1rem,4.5vw,1.4rem);
                color:rgba(255,182,193,.92);line-height:2;margin:0"></p>
-      <button onclick="closeModal('star-modal')"
-        style="margin-top:22px;font-family:var(--font-ar);background:none;border:none;
-               color:rgba(255,182,193,.4);font-size:.9rem;cursor:pointer;
-               min-height:44px;padding:0 16px">أغلق</button>
+      <button onclick="backToStars()"
+        style="margin-top:22px;font-family:var(--font-ar);
+               background:rgba(255,182,193,.12);border:1px solid rgba(255,182,193,.45);
+               border-radius:999px;color:var(--pink);font-size:.95rem;cursor:pointer;
+               min-height:46px;padding:0 20px">↶ ارجع واختار نجمة تانية</button>
     </div>
   </div>
 
@@ -858,6 +859,14 @@ function startCounter(){
 /* ═══════════════════════════════════════════════════════════
    ROOM 5 — CLICKABLE STARS
 ═══════════════════════════════════════════════════════════ */
+function backToStars(){
+  closeModal('star-modal');
+  document.querySelectorAll('.star-dot').forEach(d=>{
+    d.style.background='rgba(255,255,255,.7)';
+    d.style.boxShadow=`0 0 ${d.style.width} rgba(255,255,255,.4)`;
+  });
+}
+
 function buildStars(){
   const container = document.getElementById('stars-container');
   LOVE_REASONS.forEach((reason,i)=>{
