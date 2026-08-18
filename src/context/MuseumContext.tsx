@@ -7,6 +7,8 @@ interface MuseumState {
   setActiveModal: (modal: string | null) => void;
   modalContent: any;
   setModalContent: (content: any) => void;
+  focusTarget: [number, number, number] | null;
+  setFocusTarget: (target: [number, number, number] | null) => void;
 }
 
 const MuseumContext = createContext<MuseumState | undefined>(undefined);
@@ -15,6 +17,7 @@ export const MuseumProvider = ({ children }: { children: ReactNode }) => {
   const [currentRoom, setCurrentRoom] = useState(0);
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [modalContent, setModalContent] = useState<any>(null);
+  const [focusTarget, setFocusTarget] = useState<[number, number, number] | null>(null);
 
   return (
     <MuseumContext.Provider
@@ -25,6 +28,8 @@ export const MuseumProvider = ({ children }: { children: ReactNode }) => {
         setActiveModal,
         modalContent,
         setModalContent,
+        focusTarget,
+        setFocusTarget,
       }}
     >
       {children}
