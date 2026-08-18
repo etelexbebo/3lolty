@@ -21,7 +21,8 @@ export const Room7 = ({ position }: { position: [number, number, number] }) => {
         </Torus>
       </Float>
 
-      <Html center zIndexRange={[100, 0]}>
+      {/* onOcclude keeps drei from latching display:none when the camera passes this anchor */}
+      <Html center zIndexRange={[100, 0]} onOcclude={() => {}}>
         <div
           dir="rtl"
           className="flex max-h-[74vh] w-[88vw] max-w-[420px] flex-col items-center gap-3 overflow-y-auto rounded-2xl border border-primary/25 bg-[#090005]/88 p-4 text-center font-serif shadow-[0_0_28px_rgba(255,182,193,0.18)] backdrop-blur-xl"

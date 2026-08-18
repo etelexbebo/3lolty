@@ -37,10 +37,10 @@ const CounterBox = ({ value, label, delay }: { value: number; label: string; del
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={value}
-          initial={{ y: '55%', opacity: 0, scale: 0.85 }}
+          initial={{ y: '28%', opacity: 0.45, scale: 0.94 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: '-55%', opacity: 0, scale: 0.85 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ y: '-28%', opacity: 0, scale: 0.94 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="block font-mono leading-[1.15] text-primary tabular-nums drop-shadow-[0_0_12px_rgba(255,182,193,0.6)]"
         >
           {String(value).padStart(2, '0')}
@@ -82,7 +82,8 @@ export const Room4 = ({ position }: { position: [number, number, number] }) => {
         </Torus>
       </Float>
 
-      <Html center zIndexRange={[100, 0]}>
+      {/* onOcclude keeps drei from latching display:none when the camera passes this anchor */}
+      <Html center zIndexRange={[100, 0]} onOcclude={() => {}}>
         <div
           dir="rtl"
           className="flex max-h-[74vh] w-[88vw] max-w-[440px] flex-col items-center justify-center overflow-y-auto rounded-2xl border border-primary/25 bg-[#090005]/88 p-4 text-center font-serif shadow-[0_0_28px_rgba(255,182,193,0.18)] backdrop-blur-xl"

@@ -563,10 +563,10 @@ function CounterCard({ value, label, testId, delay }:
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span key={value}
             data-testid={testId}
-            initial={{ y: "55%", opacity: 0, scale: 0.85 }}
+            initial={{ y: "28%", opacity: 0.45, scale: 0.94 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: "-55%", opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ y: "-28%", opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             style={{ ...EN, display: "block", fontSize: "1em",
               color: PINK, fontWeight: 300, lineHeight: 1.15,
               fontVariantNumeric: "tabular-nums" as any,
