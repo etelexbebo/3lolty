@@ -132,9 +132,51 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:va
   animation:float-up var(--dur,5s) ease-in-out infinite var(--delay,0s)}
 
 /* Counter */
-.counter-digit{font-family:var(--font-en);font-size:clamp(3.5rem,18vw,7rem);
-  color:var(--pink);font-weight:300;line-height:1;font-variant-numeric:tabular-nums;
-  text-shadow:0 0 40px rgba(255,182,193,.7);animation:text-glow 3s ease-in-out infinite}
+.counter-grid{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;
+  gap:clamp(8px,2.5vw,14px);width:100%;max-width:520px}
+.counter-card{flex:1 1 clamp(88px,22vw,120px);min-width:88px;max-width:130px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(10px,2.5vw,16px) 6px;border-radius:16px;
+  background:linear-gradient(160deg,rgba(255,182,193,.09),rgba(20,4,14,.85));
+  border:1px solid rgba(255,182,193,.28);
+  box-shadow:0 0 22px rgba(255,182,193,.14),inset 0 0 18px rgba(255,182,193,.05);
+  animation:card-breathe 4.5s ease-in-out infinite var(--card-delay,0s)}
+.counter-digit{font-family:var(--font-en);font-size:clamp(1.9rem,7.5vw,3.1rem);
+  color:var(--pink);font-weight:300;line-height:1.05;font-variant-numeric:tabular-nums;
+  text-shadow:0 0 22px rgba(255,182,193,.65);display:block}
+.counter-digit.bump{animation:digit-bump .55s cubic-bezier(.22,1,.36,1)}
+.counter-label{font-family:var(--font-ar);color:rgba(255,182,193,.6);
+  font-size:clamp(.72rem,2.6vw,.95rem);margin-top:6px}
+.counter-heart{font-size:clamp(1.4rem,5vw,2rem);color:rgba(255,182,193,.75);
+  animation:heartbeat 1.6s ease-in-out infinite;margin-top:clamp(.8rem,3vw,1.4rem)}
+
+/* Gift room */
+.gift-note{font-family:var(--font-ar);font-size:clamp(1rem,3.6vw,1.3rem);
+  color:rgba(255,182,193,.9);line-height:2;text-align:center;
+  max-width:min(520px,92vw);padding:clamp(10px,3vw,16px) clamp(12px,4vw,20px);
+  background:rgba(255,182,193,.06);border-radius:16px;
+  border:1px solid rgba(255,182,193,.18);
+  text-shadow:0 0 16px rgba(255,182,193,.35);
+  animation:fade-up .9s .2s ease both}
+.gift-figure{display:flex;flex-direction:column;align-items:center;
+  gap:clamp(10px,2.5vw,16px);width:100%;max-width:min(460px,92vw);
+  animation:fade-up .9s .5s ease both}
+.gift-frame{position:relative;width:100%;
+  height:clamp(180px,38vh,320px);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  border-radius:18px;background:linear-gradient(135deg,#1f0a18,#0d0008);
+  border:1.5px solid rgba(255,182,193,.35);
+  box-shadow:0 0 30px rgba(255,182,193,.18);
+  animation:float 7s ease-in-out infinite}
+.gift-frame img{width:100%;height:100%;object-fit:contain;border-radius:16px}
+.gift-placeholder{display:none;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--font-ar);color:rgba(255,182,193,.45);
+  font-size:clamp(.8rem,3vw,1rem);text-align:center;padding:0 16px}
+.gift-caption{font-family:var(--font-ar);font-size:clamp(.92rem,3.2vw,1.15rem);
+  color:rgba(255,182,193,.85);line-height:1.95;text-align:center;
+  padding:clamp(10px,3vw,16px) clamp(12px,4vw,18px);
+  background:rgba(255,182,193,.05);border-radius:16px;
+  border:1px solid rgba(255,182,193,.16)}
 
 /* Section title */
 .section-title{font-family:var(--font-ar);font-size:clamp(1.6rem,5vw,2.6rem);
@@ -187,6 +229,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:va
 @keyframes fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes scale-in{
   from{opacity:0;transform:scale(.75)}to{opacity:1;transform:scale(1)}}
+@keyframes digit-bump{
+  0%{transform:translateY(45%) scale(.86);opacity:0;filter:blur(3px)}
+  55%{transform:translateY(0) scale(1.08);opacity:1;filter:blur(0)}
+  100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes card-breathe{
+  0%,100%{box-shadow:0 0 22px rgba(255,182,193,.14),inset 0 0 18px rgba(255,182,193,.05);
+    transform:translateY(0)}
+  50%{box-shadow:0 0 34px rgba(255,182,193,.28),inset 0 0 24px rgba(255,182,193,.09);
+    transform:translateY(-5px)}}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);text-shadow:0 0 14px rgba(255,182,193,.5)}
+  18%{transform:scale(1.22);text-shadow:0 0 26px rgba(255,182,193,.85)}
+  36%{transform:scale(1)}
+  54%{transform:scale(1.14)}}
 @keyframes pulse-door{
   0%,100%{box-shadow:0 0 50px rgba(255,182,193,.35),inset 0 0 30px rgba(255,182,193,.08)}
   50%{box-shadow:0 0 80px rgba(255,182,193,.55),inset 0 0 50px rgba(255,182,193,.14)}}
@@ -270,36 +326,34 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:va
     <div id="balls-container" style="position:absolute;inset:0"></div>
   </div>
 
-  <!-- ════════════════════════════ ROOM 4: العد التنازلي ════════════════════════════ -->
+  <!-- ════════════════════════════ ROOM 4: عداد الحب ════════════════════════════ -->
   <div id="room-4" class="room"
-    style="justify-content:center;text-align:center;padding:20px">
-    <h2 class="section-title">العد التنازلي</h2>
+    style="justify-content:center;text-align:center;padding:56px 16px 110px;gap:clamp(.6rem,2vw,1rem)">
+    <h2 class="section-title">عداد الحب</h2>
     <p style="font-family:var(--font-ar);color:rgba(255,182,193,.55);
-              font-size:clamp(.95rem,3.5vw,1.2rem);margin-bottom:1.8rem">عرفتك منذ</p>
-    <div style="display:flex;align-items:flex-start;gap:clamp(12px,4vw,28px)">
-      <div style="display:flex;flex-direction:column;align-items:center">
+              font-size:clamp(.9rem,3.2vw,1.15rem);margin-bottom:clamp(.8rem,3vw,1.4rem)">عرفتك منذ</p>
+    <div class="counter-grid">
+      <div class="counter-card" style="--card-delay:0s">
         <span id="cnt-days" class="counter-digit">0</span>
-        <span style="font-family:var(--font-ar);color:rgba(255,182,193,.6);
-                     font-size:clamp(.85rem,3vw,1.1rem);margin-top:4px">يوم</span>
+        <span class="counter-label">يوم</span>
       </div>
-      <span style="color:rgba(255,182,193,.35);font-size:clamp(1.8rem,8vw,3.5rem);
-                   font-family:var(--font-ar);padding-top:.3em">و</span>
-      <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="counter-card" style="--card-delay:-.6s">
         <span id="cnt-hours" class="counter-digit">0</span>
-        <span style="font-family:var(--font-ar);color:rgba(255,182,193,.6);
-                     font-size:clamp(.85rem,3vw,1.1rem);margin-top:4px">ساعة</span>
+        <span class="counter-label">ساعة</span>
       </div>
-      <span style="color:rgba(255,182,193,.35);font-size:clamp(1.8rem,8vw,3.5rem);
-                   font-family:var(--font-ar);padding-top:.3em">و</span>
-      <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="counter-card" style="--card-delay:-1.2s">
         <span id="cnt-mins" class="counter-digit">0</span>
-        <span style="font-family:var(--font-ar);color:rgba(255,182,193,.6);
-                     font-size:clamp(.85rem,3vw,1.1rem);margin-top:4px">دقيقة</span>
+        <span class="counter-label">دقيقة</span>
+      </div>
+      <div class="counter-card" style="--card-delay:-1.8s">
+        <span id="cnt-secs" class="counter-digit">0</span>
+        <span class="counter-label">ثانية</span>
       </div>
     </div>
+    <div class="counter-heart">❤</div>
     <p style="font-family:var(--font-ar);color:rgba(255,182,193,.38);
-              font-size:clamp(.8rem,3vw,1rem);margin-top:2rem;
-              border-top:1px solid rgba(255,182,193,.15);padding-top:1rem">
+              font-size:clamp(.78rem,2.8vw,.95rem);margin-top:clamp(1rem,3.5vw,1.6rem);
+              border-top:1px solid rgba(255,182,193,.15);padding-top:.9rem;max-width:340px">
       بدأت في 27 فبراير 2026 — 9:33 مساءً
     </p>
   </div>
@@ -370,6 +424,31 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:va
         </p>
       </div>
     </div>
+  </div>
+
+  <!-- ════════════════════════════ ROOM 7: هدية من loly ═══════════════════════════ -->
+  <div id="room-7" class="room"
+    style="padding:56px 16px calc(40px + env(safe-area-inset-bottom,20px));gap:clamp(.8rem,3vw,1.4rem)">
+    <h2 class="section-title">هدية من loly</h2>
+
+    <p class="gift-note">خفت اخسرك مرات كتير لانك اغلى واجمل واول واخر جوهره ليا ربنا يديمك ليا ❤</p>
+
+    <figure class="gift-figure">
+      <div class="gift-frame">
+        <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+        <!-- ضع صورتك في: public/memories/gift.jpg -->
+        <img id="gift-img" src="memories/gift.jpg" alt="هدية من loly"
+          onerror="this.style.display='none';document.getElementById('gift-placeholder').style.display='flex'">
+        <div id="gift-placeholder" class="gift-placeholder">
+          <span style="font-size:2.4rem">🖼️</span>
+          <span>حط الصورة في memories/gift.jpg</span>
+        </div>
+      </div>
+      <figcaption class="gift-caption">
+        اهو دي الهديه بتاعتك الي هفضل فاكرها للابد مع انها بسيطه بس الكلام الي فيها كل مافتكرو بفضل مبسوط طول اليوم ومودي كله بيتغير ❤
+      </figcaption>
+    </figure>
   </div>
 
   <!-- ── Fixed UI elements ── -->
@@ -450,7 +529,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);color:va
 /* ═══════════════════════════════════════════════════════════
    DATA
 ═══════════════════════════════════════════════════════════ */
-const ROOMS_LABELS = ['البداية','أول مرة','الذكريات','الرسائل','العد التنازلي','النجوم','ممنوع الدخول إلا ليكي'];
+const ROOMS_LABELS = ['البداية','أول مرة','الذكريات','الرسائل','عداد الحب','النجوم','ممنوع الدخول إلا ليكي','هدية من loly'];
 const START_DATE = new Date("2026-02-27T21:33:00").getTime();
 
 const MEMORIES = [
@@ -539,7 +618,7 @@ const STAR_POS = LOVE_REASONS.map((_,i)=>({
    STATE
 ═══════════════════════════════════════════════════════════ */
 let currentRoom = 0;
-const TOTAL = 7;
+const TOTAL = 8;
 let counterInterval = null;
 
 /* ═══════════════════════════════════════════════════════════
@@ -753,13 +832,24 @@ function openMessage(i){
 /* ═══════════════════════════════════════════════════════════
    ROOM 4 — LIVE COUNTER
 ═══════════════════════════════════════════════════════════ */
+function setDigit(id, value){
+  const el = document.getElementById(id);
+  const next = String(value);
+  if(el.textContent === next) return;
+  el.textContent = next;
+  el.classList.remove('bump');
+  void el.offsetWidth; // restart the entrance animation
+  el.classList.add('bump');
+}
+
 function startCounter(){
   if(counterInterval) return;
   function tick(){
     const d = Date.now()-START_DATE;
-    document.getElementById('cnt-days').textContent  = Math.floor(d/86400000);
-    document.getElementById('cnt-hours').textContent = Math.floor((d%86400000)/3600000);
-    document.getElementById('cnt-mins').textContent  = Math.floor((d%3600000)/60000);
+    setDigit('cnt-days',  Math.floor(d/86400000));
+    setDigit('cnt-hours', Math.floor((d%86400000)/3600000));
+    setDigit('cnt-mins',  Math.floor((d%3600000)/60000));
+    setDigit('cnt-secs',  Math.floor((d%60000)/1000));
   }
   tick();
   counterInterval = setInterval(tick,1000);

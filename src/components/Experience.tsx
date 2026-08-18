@@ -14,6 +14,7 @@ import { Room3 } from './rooms/Room3';
 import { Room4 } from './rooms/Room4';
 import { Room5 } from './rooms/Room5';
 import { Room6 } from './rooms/Room6';
+import { Room7 } from './rooms/Room7';
 
 const Experience = () => {
   return (
@@ -40,6 +41,7 @@ const Experience = () => {
       <Room4 position={[0, 0, 4 * ROOM_Z_SPACING]} />
       <Room5 position={[0, 0, 5 * ROOM_Z_SPACING]} />
       <Room6 position={[0, 0, 6 * ROOM_Z_SPACING]} />
+      <Room7 position={[0, 0, 7 * ROOM_Z_SPACING]} />
 
       <EffectComposer>
 
