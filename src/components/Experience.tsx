@@ -14,13 +14,22 @@ import { Room3 } from './rooms/Room3';
 import { Room4 } from './rooms/Room4';
 import { Room5 } from './rooms/Room5';
 import { Room6 } from './rooms/Room6';
+import { Room7 } from './rooms/Room7';
+
+/** Phones and tablets: lighter scene so the 3D museum stays usable there too. */
+const isSmallScreen = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
 
 const Experience = () => {
+  const [light] = React.useState(isSmallScreen);
+
   return (
     <Canvas
-      camera={{ position: [0, 0, 10], fov: 45 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: false }}
+      camera={{ position: [0, 0, 10], fov: light ? 55 : 45 }}
+      dpr={light ? [1, 1.5] : [1, 2]}
+      gl={{ antialias: !light, alpha: false, powerPreference: 'high-performance' }}
+      style={{ touchAction: 'none' }}
     >
       <color attach="background" args={['#0a0005']} />
       <ambientLight intensity={0.2} />
@@ -29,8 +38,16 @@ const Experience = () => {
       <CameraController />
       
       {/* Global Elements */}
-      <Particles count={300} />
-      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+      <Particles count={light ? 120 : 300} />
+      <Stars
+        radius={100}
+        depth={50}
+        count={light ? 1800 : 5000}
+        factor={4}
+        saturation={0}
+        fade
+        speed={1}
+      />
 
       {/* Rooms - Positioned along Z axis */}
       <Intro position={[0, 0, 0 * ROOM_Z_SPACING]} />
@@ -40,16 +57,16 @@ const Experience = () => {
       <Room4 position={[0, 0, 4 * ROOM_Z_SPACING]} />
       <Room5 position={[0, 0, 5 * ROOM_Z_SPACING]} />
       <Room6 position={[0, 0, 6 * ROOM_Z_SPACING]} />
+      <Room7 position={[0, 0, 7 * ROOM_Z_SPACING]} />
 
       <EffectComposer>
-
-        <Bloom 
-          luminanceThreshold={0.2} 
-          luminanceSmoothing={0.9} 
-          intensity={1.5} 
-          mipmapBlur 
+        <Bloom
+          luminanceThreshold={0.2}
+          luminanceSmoothing={0.9}
+          intensity={light ? 1.1 : 1.5}
+          mipmapBlur
         />
-        <Noise opacity={0.03} />
+        <Noise opacity={light ? 0 : 0.03} />
         <Vignette eskil={false} offset={0.1} darkness={1.1} />
       </EffectComposer>
     </Canvas>

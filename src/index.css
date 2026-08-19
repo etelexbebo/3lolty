@@ -143,6 +143,11 @@
     touch-action: manipulation;
   }
 
+  /* the 3D scene handles its own gestures; browser panning cancels R3F taps */
+  canvas {
+    touch-action: none;
+  }
+
   body {
     @apply antialiased bg-background text-foreground overflow-hidden;
     background: #0a0005;

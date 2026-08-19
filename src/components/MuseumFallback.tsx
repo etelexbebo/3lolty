@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LOVE_REASONS, MEMORIES, MESSAGES, START_DATE } from "@/lib/constants";
+import { GIFT, LOVE_REASONS, MEMORIES, MESSAGES, START_DATE } from "@/lib/constants";
 
 /* ── Room labels ─────────────────────────────── */
 const ROOMS = [
@@ -8,9 +8,10 @@ const ROOMS = [
   { id: 1, label: "أول مرة" },
   { id: 2, label: "الذكريات" },
   { id: 3, label: "الرسائل" },
-  { id: 4, label: "العد التنازلي" },
+  { id: 4, label: "عداد الحب" },
   { id: 5, label: "النجوم" },
   { id: 6, label: "ممنوع الدخول إلا ليكي" },
+  { id: 7, label: "هدية من loly" },
 ];
 
 /* ── Shared styles ───────────────────────────── */
@@ -536,8 +537,52 @@ function Room3() {
 }
 
 /* ════════════════════════════════════════════
-   ROOM 4 — العد التنازلي
+   ROOM 4 — عداد الحب
 ═════════════════════════════════════════════ */
+function CounterCard({ value, label, testId, delay }:
+  { value: number; label: string; testId: string; delay: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18, scale: 0.9 }}
+      animate={{ opacity: 1, y: [0, -5, 0], scale: 1 }}
+      transition={{
+        opacity: { delay, duration: 0.5 },
+        scale: { delay, type: "spring", stiffness: 220, damping: 18 },
+        y: { delay, duration: 4.5, repeat: Infinity, ease: "easeInOut" },
+      }}
+      style={{
+        flex: "1 1 clamp(88px, 22vw, 120px)", minWidth: 88, maxWidth: 130,
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        padding: "clamp(10px, 2.5vw, 16px) 6px", borderRadius: 16,
+        background: "linear-gradient(160deg, rgba(255,182,193,0.09), rgba(20,4,14,0.85))",
+        border: "1px solid rgba(255,182,193,0.28)",
+        boxShadow: "0 0 22px rgba(255,182,193,0.15), inset 0 0 18px rgba(255,182,193,0.05)",
+      }}>
+      <span style={{ display: "block", overflow: "hidden",
+        fontSize: "clamp(1.9rem, 7.5vw, 3.1rem)", height: "1.15em" }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.span key={value}
+            data-testid={testId}
+            initial={{ y: "28%", opacity: 0.45, scale: 0.94 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: "-28%", opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            style={{ ...EN, display: "block", fontSize: "1em",
+              color: PINK, fontWeight: 300, lineHeight: 1.15,
+              fontVariantNumeric: "tabular-nums" as any,
+              textShadow: "0 0 22px rgba(255,182,193,0.65)" }}>
+            {value}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+      <span style={{ ...AR, color: "rgba(255,182,193,0.6)",
+        fontSize: "clamp(0.72rem, 2.6vw, 0.95rem)", marginTop: 6 }}>
+        {label}
+      </span>
+    </motion.div>
+  );
+}
+
 function Room4() {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -556,46 +601,37 @@ function Room4() {
     return () => clearInterval(id);
   }, []);
 
-  const Digit = ({ value, label }: { value: number; label: string }) => (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <span data-testid={`text-${label}-counter`}
-        className="animate-text-glow"
-        style={{ ...EN, fontSize: "clamp(3.5rem, 18vw, 7rem)", color: PINK,
-          fontWeight: 300, lineHeight: 1, fontVariantNumeric: "tabular-nums" as any,
-
-          textShadow: "0 0 40px rgba(255,182,193,0.7)" }}>
-        {value}
-      </span>
-      <span style={{ ...AR, color: "rgba(255,182,193,0.6)", fontSize: "clamp(0.85rem, 3vw, 1.1rem)", marginTop: 4 }}>
-        {label}
-      </span>
-    </div>
-  );
-
   return (
-    <div dir="rtl" className="flex flex-col items-center justify-center h-full text-center px-4">
-      <SectionTitle text="العد التنازلي" />
+    <div dir="rtl"
+      className="flex flex-col items-center justify-center h-full text-center px-4 overflow-y-auto py-6">
+      <SectionTitle text="عداد الحب" />
 
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-        style={{ ...AR, color: "rgba(255,182,193,0.55)", fontSize: "clamp(0.95rem, 3.5vw, 1.2rem)", marginBottom: "1.8rem" }}>
+        style={{ ...AR, color: "rgba(255,182,193,0.55)", fontSize: "clamp(0.9rem, 3.2vw, 1.15rem)",
+          marginBottom: "clamp(0.8rem, 3vw, 1.4rem)" }}>
         عرفتك منذ
       </motion.p>
 
-      <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        style={{ display: "flex", alignItems: "flex-start", gap: "clamp(12px, 4vw, 28px)" }}>
-        <Digit value={time.days} label="يوم" />
-        <span style={{ color: "rgba(255,182,193,0.35)", fontSize: "clamp(1.8rem, 8vw, 3.5rem)",
-          fontFamily: "'Noto Naskh Arabic', serif", paddingTop: "0.3em" }}>و</span>
-        <Digit value={time.hours} label="ساعة" />
-        <span style={{ color: "rgba(255,182,193,0.35)", fontSize: "clamp(1.8rem, 8vw, 3.5rem)",
-          fontFamily: "'Noto Naskh Arabic', serif", paddingTop: "0.3em" }}>و</span>
-        <Digit value={time.minutes} label="دقيقة" />
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center",
+        gap: "clamp(8px, 2.5vw, 14px)", width: "100%", maxWidth: 520 }}>
+        <CounterCard value={time.days}    label="يوم"    testId="text-days-counter"    delay={0.45} />
+        <CounterCard value={time.hours}   label="ساعة"   testId="text-hours-counter"   delay={0.55} />
+        <CounterCard value={time.minutes} label="دقيقة" testId="text-minutes-counter" delay={0.65} />
+        <CounterCard value={time.seconds} label="ثانية" testId="text-seconds-counter" delay={0.75} />
+      </div>
+
+      <motion.div
+        animate={{ scale: [1, 1.22, 1, 1.14, 1], opacity: [0.75, 1, 0.8, 0.95, 0.75] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        style={{ fontSize: "clamp(1.4rem, 5vw, 2rem)", color: "rgba(255,182,193,0.8)",
+          marginTop: "clamp(0.8rem, 3vw, 1.4rem)" }}>
+        ❤
       </motion.div>
 
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
-        style={{ ...AR, color: "rgba(255,182,193,0.38)", fontSize: "clamp(0.8rem, 3vw, 1rem)",
-          marginTop: "2rem", borderTop: "1px solid rgba(255,182,193,0.15)", paddingTop: "1rem" }}>
+        style={{ ...AR, color: "rgba(255,182,193,0.38)", fontSize: "clamp(0.78rem, 2.8vw, 0.95rem)",
+          marginTop: "clamp(1rem, 3.5vw, 1.6rem)", borderTop: "1px solid rgba(255,182,193,0.15)",
+          paddingTop: "0.9rem", maxWidth: 340 }}>
         بدأت في 27 فبراير 2026 — 9:33 مساءً
       </motion.p>
     </div>
@@ -677,10 +713,12 @@ function Room5() {
                 {LOVE_REASONS[selected]}
               </p>
               <button onClick={() => setSelected(null)}
-                style={{ marginTop: 22, ...AR, background: "none", border: "none",
-                  color: "rgba(255,182,193,0.4)", fontSize: "0.9rem", cursor: "pointer",
-                  minHeight: 44, padding: "0 16px" }}>
-                أغلق
+                data-testid="button-back-to-stars"
+                style={{ marginTop: 22, ...AR, background: "rgba(255,182,193,0.12)",
+                  border: "1px solid rgba(255,182,193,0.45)", borderRadius: 999,
+                  color: PINK, fontSize: "0.95rem", cursor: "pointer",
+                  minHeight: 46, padding: "0 20px" }}>
+                ↶ ارجع واختار نجمة تانية
               </button>
             </motion.div>
           </motion.div>
@@ -806,6 +844,66 @@ function Room6() {
 }
 
 /* ════════════════════════════════════════════
+   ROOM 7 — هدية من loly
+═════════════════════════════════════════════ */
+function Room7() {
+  const [photoOk, setPhotoOk] = useState(true);
+
+  return (
+    <div dir="rtl" className="flex flex-col items-center h-full overflow-y-auto px-4"
+      style={{ gap: "clamp(0.8rem, 3vw, 1.4rem)",
+        paddingTop: "clamp(1.2rem, 4vw, 2rem)",
+        paddingBottom: "calc(env(safe-area-inset-bottom, 20px) + 24px)" }}>
+      <SectionTitle text={GIFT.title} />
+
+      <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
+        style={{ ...AR, ...GLOW_TXT, fontSize: "clamp(1rem, 3.6vw, 1.3rem)",
+          color: "rgba(255,182,193,0.9)", lineHeight: 2, textAlign: "center",
+          maxWidth: "min(520px, 92vw)", padding: "clamp(10px, 3vw, 16px) clamp(12px, 4vw, 20px)",
+          background: "rgba(255,182,193,0.06)", borderRadius: 16,
+          border: "1px solid rgba(255,182,193,0.18)", margin: 0, flexShrink: 0 }}>
+        {GIFT.note}
+      </motion.p>
+
+      <motion.figure initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        style={{ display: "flex", flexDirection: "column", alignItems: "center",
+          gap: "clamp(10px, 2.5vw, 16px)", width: "100%", maxWidth: "min(460px, 92vw)",
+          margin: 0, flexShrink: 0 }}>
+        <div className="animate-float"
+          style={{ position: "relative", width: "100%", height: "clamp(180px, 38vh, 320px)",
+            display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden",
+            borderRadius: 18, background: "linear-gradient(135deg, #1f0a18, #0d0008)",
+            border: "1.5px solid rgba(255,182,193,0.35)",
+            boxShadow: "0 0 30px rgba(255,182,193,0.18)" }}>
+          {photoOk ? (
+            <img src={GIFT.photo} alt={GIFT.photoTitle}
+              onError={() => setPhotoOk(false)}
+              style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 16 }} />
+          ) : (
+            <div style={{ ...AR, display: "flex", flexDirection: "column", alignItems: "center",
+              gap: 8, color: "rgba(255,182,193,0.45)", fontSize: "clamp(0.8rem, 3vw, 1rem)",
+              textAlign: "center", padding: "0 16px" }}>
+              <span style={{ fontSize: "2.4rem" }}>🖼️</span>
+              <span>{GIFT.placeholder}</span>
+            </div>
+          )}
+        </div>
+
+        <figcaption style={{ ...AR, fontSize: "clamp(0.92rem, 3.2vw, 1.15rem)",
+          color: "rgba(255,182,193,0.85)", lineHeight: 1.95, textAlign: "center",
+          padding: "clamp(10px, 3vw, 16px) clamp(12px, 4vw, 18px)",
+          background: "rgba(255,182,193,0.05)", borderRadius: 16,
+          border: "1px solid rgba(255,182,193,0.16)" }}>
+          {GIFT.caption}
+        </figcaption>
+      </motion.figure>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════
    Main export
 ═════════════════════════════════════════════ */
 export default function MuseumFallback() {
@@ -822,6 +920,7 @@ export default function MuseumFallback() {
     <Room4 key={4} />,
     <Room5 key={5} />,
     <Room6 key={6} />,
+    <Room7 key={7} />,
   ];
 
   const showNextBtn = currentRoom > 0 && currentRoom < ROOMS.length - 1;

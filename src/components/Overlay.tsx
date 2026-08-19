@@ -123,9 +123,10 @@ const ROOM_LABELS = [
   'أول مرة',
   'الذكريات',
   'الرسائل',
-  'العد التنازلي',
+  'عداد الحب',
   'النجوم',
-  'الباب الأخير'
+  'الباب الأخير',
+  'هدية من loly'
 ];
 
 const Overlay = () => {
@@ -172,22 +173,22 @@ const Overlay = () => {
         </div>
       </div>
 
-      {currentRoom < ROOM_LABELS.length - 1 && activeModal !== 'final' && (
+      {currentRoom > 0 && activeModal !== 'final' && (
         <div className="absolute bottom-3 left-1/2 z-50 flex flex-wrap justify-center gap-2 -translate-x-1/2 px-2">
-          {currentRoom > 0 && (
+          <button
+            onClick={() => setCurrentRoom(currentRoom - 1)}
+            className="w-full sm:w-auto rounded-full bg-white/10 px-2 py-1.5 text-[10px] sm:text-[11px] font-serif text-primary transition-all duration-300 hover:bg-white/20"
+          >
+            الغرفة السابقة
+          </button>
+          {currentRoom < ROOM_LABELS.length - 1 && (
             <button
-              onClick={() => setCurrentRoom(currentRoom - 1)}
-              className="w-full sm:w-auto rounded-full bg-white/10 px-2 py-1.5 text-[10px] sm:text-[11px] font-serif text-primary transition-all duration-300 hover:bg-white/20"
+              onClick={() => setCurrentRoom(currentRoom + 1)}
+              className="w-full sm:w-auto rounded-full bg-[#FFB6C1]/90 px-2 py-1.5 text-[10px] sm:text-[11px] font-serif text-[#12030b] shadow-[0_0_16px_rgba(255,182,193,0.7)] transition-all duration-300 hover:bg-[#FFB6C1]"
             >
-              الغرفة السابقة
+              الغرفة التالية
             </button>
           )}
-          <button
-            onClick={() => setCurrentRoom(currentRoom + 1)}
-            className="w-full sm:w-auto rounded-full bg-[#FFB6C1]/90 px-2 py-1.5 text-[10px] sm:text-[11px] font-serif text-[#12030b] shadow-[0_0_16px_rgba(255,182,193,0.7)] transition-all duration-300 hover:bg-[#FFB6C1]"
-          >
-            الغرفة التالية
-          </button>
         </div>
       )}
 

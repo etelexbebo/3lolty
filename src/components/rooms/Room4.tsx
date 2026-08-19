@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Html, Float, Torus } from '@react-three/drei';
 import { useMuseum } from '@/context/MuseumContext';
 import { START_DATE } from '@/lib/constants';
@@ -21,15 +22,35 @@ const getTimeSinceStart = (): TimeParts => {
   };
 };
 
-const CounterBox = ({ value, label }: { value: number; label: string }) => (
-  <div className="flex min-w-[66px] flex-col items-center justify-center rounded-lg border border-primary/20 bg-[#10040c]/80 px-2 py-2 shadow-[0_0_14px_rgba(255,182,193,0.12)] backdrop-blur-md sm:min-w-[78px]">
-    <span className="font-mono text-2xl leading-none text-primary tabular-nums drop-shadow-[0_0_10px_rgba(255,182,193,0.55)] sm:text-3xl">
-      {String(value).padStart(2, '0')}
+const CounterBox = ({ value, label, delay }: { value: number; label: string; delay: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 14, scale: 0.92 }}
+    animate={{ opacity: 1, y: [0, -4, 0], scale: 1 }}
+    transition={{
+      opacity: { delay, duration: 0.45 },
+      scale: { delay, type: 'spring', stiffness: 220, damping: 18 },
+      y: { delay, duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+    }}
+    className="flex min-w-[70px] flex-1 flex-col items-center justify-center rounded-xl border border-primary/25 bg-[#10040c]/80 px-2 py-3 shadow-[0_0_20px_rgba(255,182,193,0.16)] backdrop-blur-md sm:min-w-[84px]"
+  >
+    <span className="block h-[1.15em] overflow-hidden text-2xl sm:text-[1.9rem]">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={value}
+          initial={{ y: '28%', opacity: 0.45, scale: 0.94 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: '-28%', opacity: 0, scale: 0.94 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="block font-mono leading-[1.15] text-primary tabular-nums drop-shadow-[0_0_12px_rgba(255,182,193,0.6)]"
+        >
+          {String(value).padStart(2, '0')}
+        </motion.span>
+      </AnimatePresence>
     </span>
-    <span className="mt-1 text-[10px] leading-none text-primary/55 sm:text-xs">
+    <span className="mt-1.5 text-[10px] leading-none text-primary/55 sm:text-xs">
       {label}
     </span>
-  </div>
+  </motion.div>
 );
 
 export const Room4 = ({ position }: { position: [number, number, number] }) => {
@@ -61,26 +82,35 @@ export const Room4 = ({ position }: { position: [number, number, number] }) => {
         </Torus>
       </Float>
 
-      <Html center transform zIndexRange={[100, 0]} distanceFactor={11}>
+      {/* onOcclude keeps drei from latching display:none when the camera passes this anchor */}
+      <Html center zIndexRange={[100, 0]} onOcclude={() => {}}>
         <div
           dir="rtl"
-          className="flex w-[90vw] max-w-[520px] flex-col items-center justify-center rounded-xl border border-primary/25 bg-[#090005]/88 p-4 text-center font-serif shadow-[0_0_28px_rgba(255,182,193,0.18)] backdrop-blur-xl"
+          className="flex max-h-[74vh] w-[88vw] max-w-[440px] flex-col items-center justify-center overflow-y-auto rounded-2xl border border-primary/25 bg-[#090005]/88 p-4 text-center font-serif shadow-[0_0_28px_rgba(255,182,193,0.18)] backdrop-blur-xl"
         >
           <h2 className="text-xl text-primary drop-shadow-[0_0_10px_rgba(255,182,193,0.55)] sm:text-2xl">
-            العد التنازلي
+            عداد الحب
           </h2>
           <p className="mt-2 text-xs leading-relaxed text-primary/55 sm:text-sm">
             عرفتك من {time.days} يوم و {time.hours} ساعة
           </p>
 
-          <div className="mt-4 grid w-full grid-cols-2 gap-2 sm:grid-cols-4">
-            <CounterBox value={time.days} label="يوم" />
-            <CounterBox value={time.hours} label="ساعة" />
-            <CounterBox value={time.minutes} label="دقيقة" />
-            <CounterBox value={time.seconds} label="ثانية" />
+          <div className="mt-4 flex w-full flex-wrap justify-center gap-2">
+            <CounterBox value={time.days} label="يوم" delay={0.05} />
+            <CounterBox value={time.hours} label="ساعة" delay={0.15} />
+            <CounterBox value={time.minutes} label="دقيقة" delay={0.25} />
+            <CounterBox value={time.seconds} label="ثانية" delay={0.35} />
           </div>
 
-          <p className="mt-4 border-t border-primary/15 px-4 pt-3 text-xs leading-relaxed text-primary/45">
+          <motion.div
+            animate={{ scale: [1, 1.22, 1, 1.14, 1], opacity: [0.75, 1, 0.8, 0.95, 0.75] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="mt-3 text-xl text-primary/80"
+          >
+            ❤
+          </motion.div>
+
+          <p className="mt-3 border-t border-primary/15 px-4 pt-3 text-xs leading-relaxed text-primary/45">
             بدأت من 2/27/2026 - 9:33 PM
           </p>
         </div>

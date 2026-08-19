@@ -50,6 +50,16 @@ export const MESSAGES = [
 
 export const START_DATE = new Date("2026-02-27T21:33:00").getTime();
 
+export const GIFT = {
+  title: "هدية من loly",
+  note: "خفت اخسرك مرات كتير لانك اغلى واجمل واول واخر جوهره ليا ربنا يديمك ليا❤",
+  photo: "/memories/gift.jpg",
+  photoTitle: "صورة الهدية",
+  caption:
+    "اهو دي الهديه بتاعتك الي هفضل فاكرها للابد مع انها بسيطه بس الكلام الي فيها كل مافتكرو بفضل مبسوط طول اليوم ومودي كله بيتغير ❤",
+  placeholder: "حط الصورة في public/memories/gift.jpg",
+};
+
 export const MEMORIES = [
   {
     title: "أول لقاء",
