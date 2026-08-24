@@ -1,5 +1,8 @@
 export const ROOM_Z_SPACING = -30;
 
+const ASSET_BASE = import.meta.env.BASE_URL;
+export const asset = (p: string) => `${ASSET_BASE}${p.replace(/^\//, "")}`;
+
 export const LOVE_REASONS = [
   "بحبك يا علولتي لأنك أول حاجة بتيجي في بالي لما بصحى وآخر حاجة بفكر فيها قبل ما أنام",
   "بحبك لأنك بتطمني من غير ما تتكلمي وبمجرد وجودك بحس إن كل حاجة بخير",
@@ -36,16 +39,16 @@ export const LOVE_REASONS = [
 ];
 
 export const MESSAGES = [
-  { date: "2/27/2026 9:33 PM", text: "أول مره كلمتك وكانت بدايه معرفتي بنور حياتي انتي❤️", photo: "/memories/message1.jpg", photoTitle: "صورة أول مرة" },
-  { date: "3/6/2026 12:15 AM", text: "دي اول مره لما اتخانقت معاكي وبعدها بتلات ايام اعتذرتلك", photo: "/memories/message2.jpg", photoTitle: "صورة الاعتذار" },
-  { date: "3/30/2026 7:46 PM", text: "من هنا انا عرفت انك بجد شخص كويس", photo: "/memories/message3.jpg", photoTitle: "صورة اللحظة دي" },
-  { date: "4/1/2026 10:41 PM", text: "فرحت اوي انك فكرتي ودخلتي تكلميني تشوفيني مدايق ولا لا مش طبيعت صحابي يخشو يسالو كتير", photo: "/memories/message4.jpg", photoTitle: "صورة الاهتمام" },
-  { date: "4/11/2026 4:57 PM", text: "من هنا بقى بجد مكانك عليت اوي اوي", photo: "/memories/message5.jpg", photoTitle: "صورة المكانة" },
-  { date: "May 23, 1:35 AM", text: "بدات افكر طب لو خسرتك هعيش ازاي سعتها ولا هكون حالي عامل ازاي", photo: "/memories/message6.jpg", photoTitle: "صورة الخوف من الفقدان" },
-  { date: "May 24, 5:18 PM", text: "زعلت اوي وخفت اخسرك وعمري مخفت على نفسي قد ماخفت اخسرك مع اني كنت فرحان بكلامك", photo: "/memories/message7.jpg", photoTitle: "صورة القلب الخايف" },
-  { date: "May 30, 7:14 PM", text: "سعتها كنت زعلان اوي وبجد مقدرتش بعد مرجعت اطلع البيت وفضلت مخنوق فشارع ببص فتلفوني لقيت رساله دي مش قادر اوصفلك فرحت ازاي..", photo: "/memories/message8.jpg", photoTitle: "صورة المفاجأة" },
-  { date: "June 9, 2:29 AM", text: "مقلب دا بينلي قد اي انتي بتحبيني 😂 بجد قعدت يومين تعبان بسبب اني زعلتك وادتيني بلوك وبعدها علطول الصبح كسرت كوبايه وقعت تلفوني وكنت هعمل حادثه", photo: "/memories/message9.jpg", photoTitle: "صورة الندم" },
-  { date: "June 15, 2:58 AM", text: "الرساله دي بقى مش للذكرى دي قريبه بعرفك فيها اني بجد بحبك وانك نعمه وربنا رزقني وادهاني من حبو ليا وربنا يخليكي ليا ويارب اقدر احافظ عليكي لنك عيوني وحياتي ودنيتي كلها بحبك اكتر من نفسي ياروحي", photo: "/memories/message10.jpg", photoTitle: "صورة الحب الحقيقي" }
+  { date: "2/27/2026 9:33 PM", text: "أول مره كلمتك وكانت بدايه معرفتي بنور حياتي انتي❤️", photo: asset("memories/message1.jpg"), photoTitle: "صورة أول مرة" },
+  { date: "3/6/2026 12:15 AM", text: "دي اول مره لما اتخانقت معاكي وبعدها بتلات ايام اعتذرتلك", photo: asset("memories/message2.jpg"), photoTitle: "صورة الاعتذار" },
+  { date: "3/30/2026 7:46 PM", text: "من هنا انا عرفت انك بجد شخص كويس", photo: asset("memories/message3.jpg"), photoTitle: "صورة اللحظة دي" },
+  { date: "4/1/2026 10:41 PM", text: "فرحت اوي انك فكرتي ودخلتي تكلميني تشوفيني مدايق ولا لا مش طبيعت صحابي يخشو يسالو كتير", photo: asset("memories/message4.jpg"), photoTitle: "صورة الاهتمام" },
+  { date: "4/11/2026 4:57 PM", text: "من هنا بقى بجد مكانك عليت اوي اوي", photo: asset("memories/message5.jpg"), photoTitle: "صورة المكانة" },
+  { date: "May 23, 1:35 AM", text: "بدات افكر طب لو خسرتك هعيش ازاي سعتها ولا هكون حالي عامل ازاي", photo: asset("memories/message6.jpg"), photoTitle: "صورة الخوف من الفقدان" },
+  { date: "May 24, 5:18 PM", text: "زعلت اوي وخفت اخسرك وعمري مخفت على نفسي قد ماخفت اخسرك مع اني كنت فرحان بكلامك", photo: asset("memories/message7.jpg"), photoTitle: "صورة القلب الخايف" },
+  { date: "May 30, 7:14 PM", text: "سعتها كنت زعلان اوي وبجد مقدرتش بعد مرجعت اطلع البيت وفضلت مخنوق فشارع ببص فتلفوني لقيت رساله دي مش قادر اوصفلك فرحت ازاي..", photo: asset("memories/message8.jpg"), photoTitle: "صورة المفاجأة" },
+  { date: "June 9, 2:29 AM", text: "مقلب دا بينلي قد اي انتي بتحبيني 😂 بجد قعدت يومين تعبان بسبب اني زعلتك وادتيني بلوك وبعدها علطول الصبح كسرت كوبايه وقعت تلفوني وكنت هعمل حادثه", photo: asset("memories/message9.jpg"), photoTitle: "صورة الندم" },
+  { date: "June 15, 2:58 AM", text: "الرساله دي بقى مش للذكرى دي قريبه بعرفك فيها اني بجد بحبك وانك نعمه وربنا رزقني وادهاني من حبو ليا وربنا يخليكي ليا ويارب اقدر احافظ عليكي لنك عيوني وحياتي ودنيتي كلها بحبك اكتر من نفسي ياروحي", photo: asset("memories/message10.jpg"), photoTitle: "صورة الحب الحقيقي" }
 ];
 
 export const START_DATE = new Date("2026-02-27T21:33:00").getTime();

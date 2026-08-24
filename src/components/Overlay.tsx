@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMuseum } from '@/context/MuseumContext';
-import { MESSAGES } from '@/lib/constants';
+import { MESSAGES, asset } from '@/lib/constants';
 
 function FinalRecordAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -78,7 +78,7 @@ function FinalRecordAudio() {
       <div className="relative flex items-center gap-3">
         <audio
           ref={audioRef}
-          src="/memories/RECORD.aac"
+          src={asset('memories/RECORD.aac')}
           preload="auto"
           playsInline
           onLoadedData={() => setReady(true)}
